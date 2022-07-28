@@ -18,7 +18,6 @@ const SinewaveCanvas = (props: any) => {
         width: global.innerWidth
       });
     }
-    // @ts-ignore
     window.addEventListener('resize', handleResize);
   }, [])
 
@@ -29,28 +28,29 @@ const SinewaveCanvas = (props: any) => {
     const canvas = canvasRef.current
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
-    let frameCount = 0
+    // let frameCount = 0
     let animationFrameId = 0;
 
 
     let increment = 0.01;
     const render = () => {
-      frameCount++
+      // frameCount++
       animationFrameId = window.requestAnimationFrame(render)
 
-      ctx.filter = 'blur(1px)';
-      ctx.fillStyle = 'rgba(0,0,0,0.01)';
+      ctx.filter = 'blur(2px)';
+      ctx.fillStyle = 'rgba(255,255,255,0.1)';
       ctx.filter = '';
       ctx.fillRect(0, 0, global.innerWidth, global.innerHeight)
 
       ctx.beginPath();
-      ctx.moveTo(0, ctx.canvas.height / 2);
+      ctx.moveTo(-4, ctx.canvas.height / 2);
       let wavelength = 0.01;
 
-      for (let i = 0; i < ctx.canvas.width; i++) {
+      for (let i = -2; i < ctx.canvas.width; i++) {
         ctx.lineTo(i, ctx.canvas.height / 2 + Math.sin(i * wavelength + increment) * amplitude * Math.sin(increment * 2));
       }
-      ctx.strokeStyle = `hsl(${200 * Math.abs(Math.sin(increment))}, 50%, 50%)`;
+      ctx.lineWidth = 5;
+      ctx.strokeStyle = `hsl(${360 * Math.abs(Math.sin(increment))}, 50%, 50%)`;
       ctx.stroke();
       increment += 0.01;
 
