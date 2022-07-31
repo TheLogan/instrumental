@@ -8,8 +8,8 @@ export const SimpleScale = {
     { "note": notes.E4, "length": 1, string: 1 },
     { "note": notes.F4, "length": 1, string: 1 },
     { "note": notes.G4, "length": 1, string: 1 },
-    { "note": notes.A4, "length": 1, string: 2 },
-    { "note": notes.B4, "length": 1, string: 2 },
+    { "note": notes.A5, "length": 1, string: 2 },
+    { "note": notes.B5, "length": 1, string: 2 },
     { "note": notes.C5, "length": 1, string: 2 },
     { "note": notes.D5, "length": 1, string: 2 },
   ]

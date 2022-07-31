@@ -5,9 +5,11 @@ export default class Loader extends Phaser.Scene {
     super('Loader')
   }
   preload() {
-    this.load.image(images.LOGO)
-    this.load.image(images.BUTTON)
-    this.load.image(images.NOTE);
+    for (const key in images) {
+      if (Object.prototype.hasOwnProperty.call(images, key)) {
+        this.load.image(images[key])
+      }
+    }
 
     let loadingBar = this.add.graphics({
       fillStyle: {
