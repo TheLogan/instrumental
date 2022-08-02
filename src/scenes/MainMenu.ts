@@ -3,7 +3,7 @@ import { images } from '../Utilities/assets'
 
 export default class MainMenu extends Phaser.Scene {
   constructor() {
-    super('MainMenu')
+    super('MainMenu');
   }
 
   create() {
@@ -16,29 +16,7 @@ export default class MainMenu extends Phaser.Scene {
 
     this.createButton(logo, 'falling notes', 1, 'FallingNotes');
     this.createButton(logo, 'sheet music', 2, 'LearnSheetMusic');
-
-    // const fallingBtn = this.add.image(
-    //   this.game.renderer.width / 2,
-    //   logo.y + 100, images.BUTTON
-    // )
-
-    // fallingBtn.scale = 0.3;
-
-    // let fallingBtnTxt = this.add.text(fallingBtn.x, fallingBtn.y, 'Play', { fontSize: '44px', fontStyle: 'bold' });
-    // // btnTxt.setDisplayOrigin(playBtn.getCenter().x, playBtn.getCenter().y)
-    // fallingBtnTxt.setOrigin(0.5, 0.5);
-
-    // fallingBtn.setInteractive()
-    // fallingBtn.on('pointerover', () => {
-    //   fallingBtn.tint = 0x945801;
-    // })
-    // fallingBtn.on('pointerout', () => {
-    //   fallingBtn.clearTint()
-    // })
-    // fallingBtn.on('pointerup', () => this.scene.start('FallingNotes'))
-
-
-    // sheetgBtn.on('pointerup', () => this.scene.start('Sheet Music'))
+    this.createButton(logo, 'audio analyser', 3, 'AnalyseAudio');
   }
 
   createButton(logo: Phaser.GameObjects.Image, text: string, index: number, loadLevel: string) {
