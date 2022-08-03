@@ -58,7 +58,8 @@ export default class AnalyseAudio extends Phaser.Scene {
       this.graphics.beginPath();
       this.graphics.lineStyle(3, 0x000000);
       this.graphics.moveTo(0, this.renderer.height / 2);
-      let amps = this.features.powerSpectrum.slice(0, this.features.powerSpectrum.length / 2);
+      // let amps = this.features.powerSpectrum.slice(0, this.features.powerSpectrum.length / 2);
+      let amps = this.features.powerSpectrum;
       let distance = this.renderer.width / amps.length;
       for (let i = 0; i < amps.length; i++) {
         this.graphics.lineTo(i * distance, (this.renderer.height / 2) + amps[i] * 5);

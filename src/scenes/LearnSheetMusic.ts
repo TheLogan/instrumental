@@ -104,7 +104,7 @@ export default class LearnSheetMusic extends Phaser.Scene {
     if (this.sheetNotes.length > 0 && this.sheetNotes?.[0].note === notes.F4 && fKey.isDown) {
       this.compareTone(this.sheetNotes)
     }
-    if (this.sheetNotes.length > 0 && this.sheetNotes?.[0].note === notes.G4 && gKey.isDown) {
+    if (this.sheetNotes.length > 0 && this.sheetNotes?.[0].note === notes.G3 && gKey.isDown) {
       this.compareTone(this.sheetNotes)
     }
     if (this.sheetNotes.length > 0 && this.sheetNotes?.[0].note === notes.A5 && aKey.isDown) {
