@@ -7,7 +7,7 @@ import { notes } from '../Utilities/Constants';
 export default class LearnSheetMusic extends Phaser.Scene {
   constructor() { super('LearnSheetMusic') }
 
-  sheetNotes: { go: GameObjects.Image, note: number }[] = [];
+  sheetNotes: { go: GameObjects.Image, note: number, decorators?: any[] }[] = [];
 
   create() {
     let graphics = this.add.graphics();
@@ -28,11 +28,12 @@ export default class LearnSheetMusic extends Phaser.Scene {
       const x = 150 + 100 * index;
       let y = 0;
       let reverse = false;
+      const decorators: any[] = [];
       switch (note.note) {
         case notes.G3:
           y = eBar.y + 40;
-          this.add.rectangle(x, eBar.y + 16, 40, 2, 0x000000);
-          this.add.rectangle(x, eBar.y + 32, 40, 2, 0x000000);
+          decorators.push(this.add.rectangle(x, eBar.y + 16, 40, 2, 0x000000));
+          decorators.push(this.add.rectangle(x, eBar.y + 32, 40, 2, 0x000000));
           break;
         case notes.D4:
           y = eBar.y + 8;
@@ -76,7 +77,7 @@ export default class LearnSheetMusic extends Phaser.Scene {
         currentNote.rotation = Math.PI;
       }
       currentNote.scale = 0.13;
-      this.sheetNotes.push({ go: currentNote, note: note.note });
+      this.sheetNotes.push({ go: currentNote, note: note.note, decorators });
     }
 
     // end bars
@@ -118,7 +119,7 @@ export default class LearnSheetMusic extends Phaser.Scene {
     }
   }
 
-  compareTone = (sheetNotes: { go: GameObjects.Image, note: number }[]) => {
+  compareTone = (sheetNotes: { go: GameObjects.Image, note: number, decorators?: any[] }[]) => {
     const currentNote = sheetNotes.shift();
     if (!currentNote) return;
 
@@ -133,5 +134,19 @@ export default class LearnSheetMusic extends Phaser.Scene {
       onComplete: () => currentNote.go.destroy()
     });
 
+    if (currentNote.decorators && currentNote.decorators.length > 0) {
+      for (const decorator of currentNote.decorators) {
+        this.tweens.add({
+          targets: decorator,
+          // y: this.game.renderer.height,
+          duration: 600,
+          ease: 'Sine.in',
+          yoyo: false,
+          repeat: 0,
+          alpha: { value: 0, duration: 500, ease: 'Power1', delay: 100 },
+          onComplete: () => decorator.destroy()
+        });
+      }
+    }
   }
 }
