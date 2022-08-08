@@ -1,6 +1,5 @@
 import Phaser, { GameObjects, Tweens } from 'phaser'
-import { images } from '../Utilities/assets';
-// import { SimpleScale } from '../Music/SimpleScale';
+import { images, svgs } from '../Utilities/assets';
 import { OpenString } from '../Music/Violin/OpenString';
 import { notes } from '../Utilities/Constants';
 
@@ -14,6 +13,7 @@ export default class LearnSheetMusic extends Phaser.Scene {
     graphics.fillGradientStyle(0xfff6de, 0xffeebf, 0xffeebf, 0xffde82);
     graphics.fillRect(0, 0, this.renderer.width, this.renderer.height);
     let barsY = this.renderer.width / 10;
+
     // draws the horizontal bars
     const fBar = this.add.rectangle(this.renderer.width / 2, barsY, this.renderer.width - 100, 2, 0x000000);
     const dBar = this.add.rectangle(this.renderer.width / 2, barsY + 16, this.renderer.width - 100, 2, 0x000000);
@@ -71,12 +71,12 @@ export default class LearnSheetMusic extends Phaser.Scene {
         this.add.rectangle(x - 50, y - 8, 4, 65, 0x000000);
       }
 
-
-      let currentNote = this.add.image(x, y, images.NOTE);
+      console.log('svgs.NOTES_HALF', svgs.NOTES_HALF)
+      let currentNote = this.add.image(x, y, svgs.NOTES_HALF);
       if (reverse) {
         currentNote.rotation = Math.PI;
       }
-      currentNote.scale = 0.13;
+      // currentNote.scale = 0.13;
       this.sheetNotes.push({ go: currentNote, note: note.note, decorators });
     }
 

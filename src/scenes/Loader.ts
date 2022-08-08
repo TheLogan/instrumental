@@ -1,5 +1,5 @@
-import Phaser from 'phaser'
-import { images } from '../Utilities/assets'
+import Phaser from 'phaser';
+import { images, svgs } from '../Utilities/assets';
 export default class Loader extends Phaser.Scene {
   constructor() {
     super('Loader')
@@ -8,6 +8,13 @@ export default class Loader extends Phaser.Scene {
     for (const key in images) {
       if (Object.prototype.hasOwnProperty.call(images, key)) {
         this.load.image(images[key])
+      }
+    }
+
+    for (const key in svgs) {
+      if (Object.prototype.hasOwnProperty.call(svgs, key)) {
+        console.log('current svg', key);
+        this.load.svg(svgs[key])
       }
     }
 
