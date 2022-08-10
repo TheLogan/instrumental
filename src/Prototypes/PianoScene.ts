@@ -1,4 +1,7 @@
 import Phaser from 'phaser'
+import OdeToJoy from "../Music/OdeToJoy.json";
+import { notes, noteLength } from '../Utilities/Constants';
+import { dotLength } from '../Utilities/MusicMath';
 
 export default class PianoScene extends Phaser.Scene {
   audioContex = new AudioContext();
@@ -12,54 +15,51 @@ export default class PianoScene extends Phaser.Scene {
     this.playMelody();
   }
 
-
-
-  playNote = (frequency: number, duration: number, callback: () => void) => {
+  playNote = (note: string, duration: number) => {
     // create Oscillator node
-    var oscillator = this.audioContex.createOscillator();
+    const oscillator = this.audioContex.createOscillator();
+    const frequency = notes[note];
+    const gainNode = this.audioContex.createGain();
 
-    oscillator.type = 'square';
+    oscillator.type = 'sine';
     oscillator.frequency.value = frequency; // value in hertz
-    oscillator.connect(this.audioContex.destination);
-    oscillator.onended = callback;
-    oscillator.start(0);
+    console.log('frequency', frequency)
+    oscillator.connect(gainNode);
+    gainNode.connect(this.audioContex.destination)
+    gainNode.gain.setTargetAtTime(0, this.audioContex.currentTime + duration - 0.075, 0.015);
+    oscillator.start();
     oscillator.stop(this.audioContex.currentTime + duration);
   }
 
-
   playMelody = () => {
-    if (this.notes.length > 0) {
-      let note = this.notes.shift();
-      if (!note) return;
-      this.playNote(note[0], 256 / (note[1] * this.tempo), this.playMelody);
+    const notes: { timestamp: number, note: string, length: number }[] = [];
+    this.tempo = OdeToJoy['metronome mark'];
+
+    for (const event of OdeToJoy.events) {
+      if (event.type === 'note') {
+        let length = noteLength[event.length];
+        if (event.relations?.dot) {
+          length = dotLength(length);
+        }
+        const lastTimestamp = notes[notes.length - 1]?.timestamp || 0;
+        const lastLength = notes[notes.length - 1]?.length || 0;
+
+        const timestamp = lastTimestamp + lastLength * 1000; // USes the wrong timestap, needs to use the previous nodes length
+        notes.push({ timestamp, note: event.note, length });
+      }
     }
+    console.log('notes', notes)
+
+    let musicTime = 0;
+    let musicInterval = setInterval(() => {
+      musicTime += 10;
+      if (notes.length > 0 && notes[0].timestamp <= musicTime) {
+        let currentNote = notes.shift();
+        if (!currentNote) return;
+        this.playNote(currentNote.note, currentNote.length);
+      } else if (notes.length <= 0) {
+        clearInterval(musicInterval);
+      }
+    }, 10);
   }
-
-  notes = [
-    [659, 4],
-    [659, 4],
-    [659, 4],
-    [523, 8],
-    [0, 16],
-    [783, 16],
-    [659, 4],
-    [523, 8],
-    [0, 16],
-    [783, 16],
-    [659, 4],
-    [0, 4],
-    [987, 4],
-    [987, 4],
-    [987, 4],
-    [1046, 8],
-    [0, 16],
-    [783, 16],
-    [622, 4],
-    [523, 8],
-    [0, 16],
-    [783, 16],
-    [659, 4]
-  ];
-
-
 }

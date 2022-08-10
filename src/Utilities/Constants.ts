@@ -1,4 +1,4 @@
-export const notes = {
+export const notes: iStringKey = {
   "C0": 16.35,
   "C#0": 17.32,
   "Db0": 17.32,
@@ -154,10 +154,15 @@ export const notes = {
   "B8": 7902.13,
 }
 
-export const noteLength = {
-  "1":"1",
-  "1/2":"0.5",
-  "1/4":"0.25",
-  "1/8":"0.125",
-  "1/16": "0.0625",
+export const noteLength: iStringKey = {
+  "1": 1,
+  "1/2": 1 / 2,
+  "1/4": 1 / 4,
+  "1/8": 1 / 8,
+  "1/16": 1 / 16,
+
+}
+
+interface iStringKey {
+  [key: string]: number;
 }
