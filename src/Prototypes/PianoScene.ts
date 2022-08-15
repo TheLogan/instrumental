@@ -1,6 +1,6 @@
 import Phaser from 'phaser'
 import OdeToJoy from "../Music/OdeToJoy.json";
-import { notes, noteLength } from '../Utilities/Constants';
+import { notesOld, noteLength } from '../Utilities/Constants';
 import { dotLength } from '../Utilities/MusicMath';
 
 export default class PianoScene extends Phaser.Scene {
@@ -18,7 +18,7 @@ export default class PianoScene extends Phaser.Scene {
   playNote = (note: string, duration: number) => {
     // create Oscillator node
     const oscillator = this.audioContex.createOscillator();
-    const frequency = notes[note];
+    const frequency = notesOld[note];
     const gainNode = this.audioContex.createGain();
 
     oscillator.type = 'sine';
@@ -27,6 +27,17 @@ export default class PianoScene extends Phaser.Scene {
     oscillator.connect(gainNode);
     gainNode.connect(this.audioContex.destination)
     gainNode.gain.setTargetAtTime(0, this.audioContex.currentTime + duration - 0.075, 0.015);
+
+    let sineTerms = new Float32Array([0.5, 0.4, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.7, 0.5]);
+    let cosineTerms = new Float32Array(sineTerms.length);
+    let customWaveform = this.audioContex.createPeriodicWave(cosineTerms, sineTerms);
+    oscillator.setPeriodicWave(customWaveform);
+
+    // let imag = new Float32Array([0, 0, 1, 0, 1]);   // sine
+    // let real = new Float32Array(imag.length);  // cos
+    // const wave = this.audioContex.createPeriodicWave(real, imag, { disableNormalization: true });
+    // oscillator.setPeriodicWave(wave);
+
     oscillator.start();
     oscillator.stop(this.audioContex.currentTime + duration);
   }
@@ -44,7 +55,7 @@ export default class PianoScene extends Phaser.Scene {
         const lastTimestamp = notes[notes.length - 1]?.timestamp || 0;
         const lastLength = notes[notes.length - 1]?.length || 0;
 
-        const timestamp = lastTimestamp + lastLength * 1000; // USes the wrong timestap, needs to use the previous nodes length
+        const timestamp = lastTimestamp + lastLength * 1000;
         notes.push({ timestamp, note: event.note, length });
       }
     }

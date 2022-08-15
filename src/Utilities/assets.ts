@@ -5,12 +5,10 @@ export const images: iImages = {
 }
 
 export const svgs: iImages = {
-  NOTES_WHOLE: 'assets/Notes/Whole',
-  NOTES_HALF: 'assets/Notes/Half',
-  // NOTES_QUARTER: 'assets/Notes/Defau1ltNote',
-  // NOTES_EIGHTTH: '',
-  // NOTES_SIXTEENTHS: '',
-  // NOTES_THIRTYSECONDS: '',
+  "1": 'assets/Notes/Whole',
+  "1/2": 'assets/Notes/Half',
+  "1/4": 'assets/Notes/Quarter',
+  "1/8": "assets/Notes/Eighth",
 }
 
 interface iImages {
