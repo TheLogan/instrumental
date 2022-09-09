@@ -18,6 +18,7 @@ export default class MainMenu extends Phaser.Scene {
     this.createButton(logo, 'sheet music', 2, 'LearnSheetMusic');
     this.createButton(logo, 'audio analyser', 3, 'AnalyseAudio');
     this.createButton(logo, 'Piano', 4, 'PianoScene');
+    this.createButton(logo, 'tuner engine', 5, 'TunerEngine');
   }
 
   createButton(logo: Phaser.GameObjects.Image, text: string, index: number, loadLevel: string) {
