@@ -1,0 +1,23 @@
+{
+  "name": "Open string",
+  "time signature": "4/4",
+  "metronome mark": 120,
+  "events": [
+    { "type": "note", "note": "G3", "length": "1/4" },
+    { "type": "note", "note": "G3", "length": "1/4" },
+    { "type": "note", "note": "D4", "length": "1/4" },
+    { "type": "note", "note": "D4", "length": "1/4" },
+    { "type": "note", "note": "A4", "length": "1/4" },
+    { "type": "note", "note": "A4", "length": "1/4" },
+    { "type": "note", "note": "E5", "length": "1/4" },
+    { "type": "note", "note": "E5", "length": "1/4" },
+    { "type": "note", "note": "A4", "length": "1/4" },
+    { "type": "note", "note": "A4", "length": "1/4" },
+    { "type": "note", "note": "D4", "length": "1/4" },
+    { "type": "note", "note": "D4", "length": "1/4" },
+    { "type": "note", "note": "A4", "length": "1/4" },
+    { "type": "note", "note": "A4", "length": "1/4" },
+    { "type": "note", "note": "D4", "length": "1/4" },
+    { "type": "note", "note": "D4", "length": "1/4" }
+  ]
+}
