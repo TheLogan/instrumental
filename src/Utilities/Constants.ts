@@ -126,17 +126,17 @@ export const notes: iNote[] = [
   { note: "F3", freq: 174.61 },
   { note: "F#3", freq: 185.00 },
   { note: "Gb3", freq: 185.00 },
-  { note: "G3", freq: 196.00 },
+  { note: "G3", freq: 196.00 , midi: 55},
   { note: "G#3", freq: 207.65 },
   { note: "Ab3", freq: 207.65 },
-  { note: "A3", freq: 220.00 },
+  { note: "A3", freq: 220.00 , midi: 57 },
   { note: "A#3", freq: 233.08 },
   { note: "Bb3", freq: 233.08 },
-  { note: "B3", freq: 246.94 },
-  { note: "C4", freq: 261.63 },
+  { note: "B3", freq: 246.94 , midi: 59},
+  { note: "C4", freq: 261.63 , midi: 60},
   { note: "C#4", freq: 277.18 },
   { note: "Db4", freq: 277.18 },
-  { note: "D4", freq: 293.66 },
+  { note: "D4", freq: 293.66 , midi: 62},
   { note: "D#4", freq: 311.13 },
   { note: "Eb4", freq: 311.13 },
   { note: "E4", freq: 329.63 },
@@ -390,5 +390,5 @@ interface iStringKey {
 }
 
 interface iNote {
-  note: string, freq: number;
+  note: string, freq: number, midi?: number;
 }
