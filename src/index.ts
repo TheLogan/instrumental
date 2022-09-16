@@ -6,10 +6,10 @@ import FallingNotes from './scenes/FallingNotes'
 import LearnSheetMusic from './scenes/SheetMusic/LearnSheetMusic'
 import AnalyseAudio from './Prototypes/AnalyseAudio'
 import PianoScene from './Prototypes/PianoScene'
-import TunerEngine from './scenes/TunerEngine'
+import TunerScene from './scenes/TunerScene'
 
 new Phaser.Game(
   Object.assign(config, {
-    scene: [Loader, MainMenu, FallingNotes, LearnSheetMusic, AnalyseAudio, PianoScene, TunerEngine],
+    scene: [Loader, MainMenu, FallingNotes, LearnSheetMusic, AnalyseAudio, PianoScene, TunerScene],
   }),
 )
