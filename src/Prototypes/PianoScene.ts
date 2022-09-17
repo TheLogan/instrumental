@@ -48,7 +48,7 @@ export default class PianoScene extends Phaser.Scene {
 
     for (const event of OdeToJoy.events) {
       if (event.type === 'note') {
-        let length = noteLength[event.length];
+        let length = noteLength[event.duration];
         if (event.relations?.dot) {
           length = dotLength(length);
         }
