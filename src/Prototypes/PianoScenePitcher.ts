@@ -13,7 +13,6 @@ export default class PianoScenePitcher extends Phaser.Scene {
   tempo = 100;
 
   pitcher = new PitcherSampler();
-  ovtNumber = 2;
 
   constructor() {
     super('PianoScenePitcher');
@@ -28,7 +27,6 @@ export default class PianoScenePitcher extends Phaser.Scene {
     this.tempo = music['metronome mark'];
 
     let skipCount = 0;
-    let restCount = 0;
     for (const [index, event] of music.events.entries()) {
       if (skipCount > 0) {
         skipCount--;
@@ -61,8 +59,8 @@ export default class PianoScenePitcher extends Phaser.Scene {
       }
       if (event.type === 'rest') {
         const lastTimestamp = musicNotes[musicNotes.length - 1]?.timestamp || 0;
-        const lastLength = musicNotes[musicNotes.length - 1]?.duration || 0;
-        const timestamp = lastTimestamp + lastLength * 1000;
+        const lastDuration = musicNotes[musicNotes.length - 1]?.duration || 0;
+        const timestamp = lastTimestamp + lastDuration * 1000;
 
         musicNotes.push({ timestamp, note: "rest", duration: noteDuration[event.duration] });
 
