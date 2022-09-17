@@ -3,25 +3,86 @@
   "time signature": "4/4",
   "metronome mark": 120,
   "events": [
-    { "type": "note", "note": "B3", "length": "1/4" },
-    { "type": "note", "note": "B3", "length": "1/4" },
-    { "type": "note", "note": "C4", "length": "1/4" },
-    { "type": "note", "note": "D4", "length": "1/4" },
-    { "type": "note", "note": "D4", "length": "1/4" },
-    { "type": "note", "note": "C4", "length": "1/4" },
-    { "type": "note", "note": "B3", "length": "1/4" },
-    { "type": "note", "note": "A3", "length": "1/4" },
-    { "type": "note", "note": "G3", "length": "1/4" },
-    { "type": "note", "note": "G3", "length": "1/4" },
-    { "type": "note", "note": "A3", "length": "1/4" },
-    { "type": "note", "note": "B3", "length": "1/4" },
+    {
+      "type": "note",
+      "note": "B3",
+      "length": "1/4"
+    },
+    {
+      "type": "note",
+      "note": "B3",
+      "length": "1/4"
+    },
+    {
+      "type": "note",
+      "note": "C4",
+      "length": "1/4"
+    },
+    {
+      "type": "note",
+      "note": "D4",
+      "length": "1/4"
+    },
+    {
+      "type": "note",
+      "note": "D4",
+      "length": "1/4"
+    },
+    {
+      "type": "note",
+      "note": "C4",
+      "length": "1/4"
+    },
+    {
+      "type": "note",
+      "note": "B3",
+      "length": "1/4"
+    },
+    {
+      "type": "note",
+      "note": "A3",
+      "length": "1/4"
+    },
+    {
+      "type": "note",
+      "note": "G3",
+      "length": "1/4"
+    },
+    {
+      "type": "note",
+      "note": "G3",
+      "length": "1/4"
+    },
+    {
+      "type": "note",
+      "note": "A3",
+      "length": "1/4"
+    },
+    {
+      "type": "note",
+      "note": "B3",
+      "length": "1/4"
+    },
     {
       "type": "note",
       "note": "B3",
       "length": "1/4",
-      "relations": { "dot": 1 }
+      "relations": {
+        "dot": 1
+      }
     },
-    { "type": "note", "note": "A3", "length": "1/8" },
-    { "type": "note", "note": "A3", "length": "1/2" }
+    {
+      "type": "note",
+      "note": "A3",
+      "length": "1/8"
+    },
+    {
+      "type": "note",
+      "note": "A3",
+      "length": "1/2",
+      "relations": {
+        "tie": 0
+      }
+    }
   ]
 }

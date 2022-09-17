@@ -11,6 +11,7 @@
       "time": 0,
       "relations": { "tie": 5 }
     },
+    { "type": "rest", "length": "1/2" },
     { "type": "note", "note": "G5", "length": "1/2", "accidental": "#" },
     { "type": "chord", "notes": ["A5", "B5"], "length": 2 },
     { "type": "time signature", "value": "6/8" }

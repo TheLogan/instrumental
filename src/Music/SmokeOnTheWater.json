@@ -1,0 +1,38 @@
+{
+  "name": "Smoke on the Water",
+  "time signature": "4/4",
+  "metronome mark": 115,
+  "events": [
+    { "type": "note", "note": "D3", "length": "1/4" },
+    { "type": "note", "note": "F3", "length": "1/4" },
+    { "type": "note", "note": "G3", "length": "1/4" },
+    { "type": "rest", "length": "1/8" },
+    { "type": "note", "note": "D3", "length": "1/8" },
+    { "type": "rest", "length": "1/8" },
+    { "type": "note", "note": "F3", "length": "1/4" },
+    { "type": "note", "note": "G#3", "length": "1/8" },
+    { "type": "note", "note": "G3", "length": "1/2" },
+    { "type": "note", "note": "D3", "length": "1/4" },
+    { "type": "note", "note": "F3", "length": "1/4" },
+    {
+      "type": "note",
+      "note": "G3",
+      "length": "1/4",
+      "relations": { "dot": 1 }
+    },
+    {
+      "type": "note",
+      "note": "F3",
+      "length": "1/8",
+      "relations": {"tie": 1}
+    },
+    { "type": "note", "note": "F3", "length": "1/8" },
+    {
+      "type": "note",
+      "note": "D3",
+      "length": "1/8",
+      "relations": {"tie": 1, "dot": 1}
+    },
+    { "type": "note", "note": "D3", "length": "1/2" }
+  ]
+}
