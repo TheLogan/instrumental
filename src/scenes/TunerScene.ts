@@ -8,31 +8,33 @@ export default class TunerScene extends Phaser.Scene {
   }
 
   textClosestNote?: Phaser.GameObjects.Text;
-  textFreq?: Phaser.GameObjects.Text;
-  textArrow?: Phaser.GameObjects.Text;
-  
-
-  // textPrevNote?: Phaser.GameObjects.Text;
   // textFreq?: Phaser.GameObjects.Text;
-  // textNextNote?: Phaser.GameObjects.Text;
   tunerEngine?: TunerEngine;
+  gauge?: {bg:Phaser.GameObjects.Arc, arrow: Phaser.GameObjects.Container};
 
   create() {
     console.log('init');
+    this.buildGauge();
     this.textClosestNote = this.add.text(this.renderer.width / 2, this.renderer.height / 2, '', { fontSize: '128px'});
-    this.textFreq = this.add.text(this.textClosestNote.x, this.textClosestNote.y + 200, '', { fontSize: '32px'})
-    this.textArrow = this.add.text(this.textClosestNote.x, this.textClosestNote.y - 200, '', { fontSize: '64px'})
-
-    // this.textPrevNote = this.add.text(100, this.renderer.height / 2, '', { fontSize: '64px', align: '' });
-    // this.textFreq = this.add.text(this.renderer.width / 2, this.renderer.height / 2, '', { fontSize: '64px', align: '' });
-    // this.textNextNote = this.add.text(this.renderer.width - 300, this.renderer.height / 2, '', { fontSize: '64px', align: '' });
-  
+    // this.textFreq = this.add.text(this.textClosestNote.x, this.textClosestNote.y + 200, '', { fontSize: '32px'})
     this.tunerEngine = new TunerEngine();
+  }
+
+  buildGauge(){
+    const screenX = this.renderer.width / 2;
+    const screenY = this.renderer.height / 2 + 100;
+
+    const bg = this.add.circle(screenX, screenY, 230, 0x979797);
+    const arrow = this.add.rectangle(0,-100, 20, 200, 0x000)
+    this.gauge = {
+      bg,
+      arrow: this.add.container(screenX, screenY, arrow),
+    };
   }
 
 
   update() {
-    if (!this.textClosestNote || !this.textFreq || !this.textArrow)return;
+    if (!this.textClosestNote)return;
     const freq = this.tunerEngine?.getFreq();
 
     if(freq == null || freq < 5) {
@@ -42,32 +44,30 @@ export default class TunerScene extends Phaser.Scene {
     const closest = notes.reduce(function (prev, curr) {
       return (Math.abs(curr.freq - freq) < Math.abs(prev.freq - freq) ? curr : prev);
     });
-
-    // const index = notes.findIndex( x=> x === closest);
-    // let prevNote;
-    // let nextNote;
-    // if(closest.freq < freq) {
-    //   prevNote = notes[index];
-    //   nextNote = notes[index +1];
-    // } else {
-    //   prevNote = notes[index -1];
-    //   nextNote = notes[index];
-    // }
-
-    // if(!prevNote || !nextNote) return;
-
+    const closestIndex = notes.findIndex(x => x.freq === closest.freq);
 
     this.textClosestNote.text = closest.note;
-    this.textFreq.text = freq.toFixed(2);
+
+    let secondClosest;
     if(closest.freq > freq) {
-      this.textArrow.text = "->";
+      secondClosest = notes[closestIndex -1];
+      if(secondClosest?.freq === closest.freq) secondClosest = notes[closestIndex -2];
     } else {
-      this.textArrow.text = "<-"
+      secondClosest = notes[closestIndex +1];
+      if(secondClosest?.freq === closest.freq) secondClosest = notes[closestIndex +2];
     }
-    
-    // this.textPrevNote.text = prevNote.note + '\n' + prevNote.freq;
-    // this.textFreq.text = freq.toFixed(2);
-    // this.textNextNote.text = nextNote.note + '\n' + nextNote.freq;
+    if(!secondClosest || !this.gauge) return;
+
+    let totalDiff = Math.abs(secondClosest.freq - closest.freq);
+
+    let diff = closest.freq - freq;
+    let percent = diff/totalDiff * 100;
+    console.log('secondClosest', secondClosest.freq, 'closest', closest.freq, 'percent', percent);
+    console.log('freq', freq, 'diff', diff, 'totalDiff', totalDiff)
+
+    // this.textFreq.text = percent.toFixed(2) + "%";
+    // calculate position from 0 to 90
+    this.gauge.arrow.angle = percent;
   }
 }
 
