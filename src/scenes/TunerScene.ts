@@ -61,7 +61,7 @@ export default class TunerScene extends Phaser.Scene {
     let totalDiff = Math.abs(secondClosest.freq - closest.freq);
 
     let diff = closest.freq - freq;
-    let percent = diff/totalDiff * 100;
+    let percent = diff/totalDiff * -100;
     console.log('secondClosest', secondClosest.freq, 'closest', closest.freq, 'percent', percent);
     console.log('freq', freq, 'diff', diff, 'totalDiff', totalDiff)
 
