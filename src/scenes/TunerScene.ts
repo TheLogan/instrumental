@@ -1,22 +1,28 @@
 import Phaser from 'phaser';
 import TunerEngine from '../Utilities/TunerEngine';
 import { notes } from '../Utilities/Constants';
+import { svgs } from '../Utilities/assets';
 
 export default class TunerScene extends Phaser.Scene {
   constructor() {
     super('TunerScene');
   }
 
-  textClosestNote?: Phaser.GameObjects.Text;
-  // textFreq?: Phaser.GameObjects.Text;
+  // textClosestNote?: Phaser.GameObjects.Text;
   tunerEngine?: TunerEngine;
-  gauge?: {bg:Phaser.GameObjects.Arc, arrow: Phaser.GameObjects.Container};
+  gauge?: {
+    bg:Phaser.GameObjects.Image,
+    noteText: Phaser.GameObjects.Text,
+    arrow: Phaser.GameObjects.Container
+  };
 
   create() {
     console.log('init');
+    var div = document.getElementById('game');
+    if(div) div.style.backgroundColor = "#404040";
+    else console.log('no div')
+
     this.buildGauge();
-    this.textClosestNote = this.add.text(this.renderer.width / 2, this.renderer.height / 2, '', { fontSize: '128px'});
-    // this.textFreq = this.add.text(this.textClosestNote.x, this.textClosestNote.y + 200, '', { fontSize: '32px'})
     this.tunerEngine = new TunerEngine();
   }
 
@@ -24,17 +30,19 @@ export default class TunerScene extends Phaser.Scene {
     const screenX = this.renderer.width / 2;
     const screenY = this.renderer.height / 2 + 100;
 
-    const bg = this.add.circle(screenX, screenY, 230, 0x979797);
-    const arrow = this.add.rectangle(0,-100, 20, 200, 0x000)
+    const bg = this.add.image(screenX, screenY, svgs.GAUGE);
+    bg.scale = 1.5;
+    const arrow = this.add.rectangle(0,-140, 20, 200, 0x000);
+    const noteText = this.add.text(screenX, screenY + 30, '', { fontSize: '128px'});
     this.gauge = {
       bg,
+      noteText,
       arrow: this.add.container(screenX, screenY, arrow),
     };
   }
 
 
   update() {
-    if (!this.textClosestNote)return;
     const freq = this.tunerEngine?.getFreq();
 
     if(freq == null || freq < 5) {
@@ -46,7 +54,6 @@ export default class TunerScene extends Phaser.Scene {
     });
     const closestIndex = notes.findIndex(x => x.freq === closest.freq);
 
-    this.textClosestNote.text = closest.note;
 
     let secondClosest;
     if(closest.freq > freq) {
@@ -65,9 +72,9 @@ export default class TunerScene extends Phaser.Scene {
     console.log('secondClosest', secondClosest.freq, 'closest', closest.freq, 'percent', percent);
     console.log('freq', freq, 'diff', diff, 'totalDiff', totalDiff)
 
-    // this.textFreq.text = percent.toFixed(2) + "%";
-    // calculate position from 0 to 90
     this.gauge.arrow.angle = percent;
+    this.gauge.noteText.text = closest.note;
+
   }
 }
 
