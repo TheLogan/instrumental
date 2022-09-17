@@ -75,7 +75,7 @@ export default class PianoScenePitcher extends Phaser.Scene {
         clearInterval(musicInterval);
         return;
       }
-      musicTime += 10;
+      musicTime += 50;
       if (musicNotes[0].note != "rest" && musicNotes[0].timestamp <= musicTime) {
         let currentNote = musicNotes.shift();
         if (!currentNote) return;
@@ -87,6 +87,6 @@ export default class PianoScenePitcher extends Phaser.Scene {
       } else if (musicNotes[0].note === 'rest') {
         let currentNote = musicNotes.shift();
       }
-    }, 10);
+    }, 50);
   }
 }
