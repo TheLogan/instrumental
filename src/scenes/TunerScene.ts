@@ -12,7 +12,10 @@ export default class TunerScene extends Phaser.Scene {
   tunerEngine?: TunerEngine;
   gauge?: {
     bg:Phaser.GameObjects.Image,
-    noteText: Phaser.GameObjects.Text,
+    noteText: {
+      bg: Phaser.GameObjects.Rectangle,
+      text: Phaser.GameObjects.Text,
+    },
     arrow: Phaser.GameObjects.Container
   };
 
@@ -21,6 +24,8 @@ export default class TunerScene extends Phaser.Scene {
     var div = document.getElementById('game');
     if(div) div.style.backgroundColor = "#404040";
     else console.log('no div')
+
+    this.add.text(this.renderer.width / 2, 130, 'Tuner', {fontSize: '200px', fontFamily: 'Helvetica'}).setOrigin(0.5);
 
     this.buildGauge();
     this.tunerEngine = new TunerEngine();
@@ -31,14 +36,18 @@ export default class TunerScene extends Phaser.Scene {
     const screenY = this.renderer.height / 2 + 100;
 
     const bg = this.add.image(screenX, screenY, svgs.GAUGE);
-    bg.scale = 1.5;
-    const arrow = this.add.rectangle(0,-140, 20, 200, 0x000);
-    const noteText = this.add.text(screenX, screenY + 30, '', { fontSize: '128px'});
+    const arrow = this.add.rectangle(0,-105, 10, 150, 0x000);
     this.gauge = {
       bg,
-      noteText,
+      noteText: {
+        bg: this.add.rectangle(screenX, screenY + 60, 200, 100, 0x353535),
+        text: this.add.text(screenX, screenY + 60, '--', { fontSize: '100px' }).setOrigin(0.5),
+
+      },
       arrow: this.add.container(screenX, screenY, arrow),
     };
+
+    this.gauge.noteText.bg.setStrokeStyle(2, 0x303030);
   }
 
 
@@ -54,7 +63,6 @@ export default class TunerScene extends Phaser.Scene {
     });
     const closestIndex = notes.findIndex(x => x.freq === closest.freq);
 
-
     let secondClosest;
     if(closest.freq > freq) {
       secondClosest = notes[closestIndex -1];
@@ -69,12 +77,9 @@ export default class TunerScene extends Phaser.Scene {
 
     let diff = closest.freq - freq;
     let percent = diff/totalDiff * -100;
-    console.log('secondClosest', secondClosest.freq, 'closest', closest.freq, 'percent', percent);
-    console.log('freq', freq, 'diff', diff, 'totalDiff', totalDiff)
 
     this.gauge.arrow.angle = percent;
-    this.gauge.noteText.text = closest.note;
-
+    this.gauge.noteText.text.text = closest.note;
   }
 }
 

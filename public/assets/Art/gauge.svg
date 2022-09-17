@@ -26,7 +26,7 @@
      inkscape:document-units="px"
      showgrid="false"
      inkscape:zoom="1"
-     inkscape:cx="125.5"
+     inkscape:cx="73.5"
      inkscape:cy="276"
      inkscape:window-width="1920"
      inkscape:window-height="935"
@@ -73,8 +73,12 @@
          id="stop5392" />
       <stop
          style="stop-color:#0073ac;stop-opacity:1;"
-         offset="0.40317202"
+         offset="0.26527694"
          id="stop5394" />
+      <stop
+         style="stop-color:#004d74;stop-opacity:1;"
+         offset="0.51663101"
+         id="stop6711" />
       <stop
          style="stop-color:#00293e;stop-opacity:1;"
          offset="1"
@@ -107,7 +111,7 @@
      inkscape:groupmode="layer"
      id="layer1">
     <circle
-       style="display:inline;fill:url(#radialGradient20090);fill-opacity:1;stroke-width:0.257968"
+       style="display:inline;fill:url(#radialGradient20090);fill-opacity:1;stroke-width:0.25796875;stroke-dasharray:none"
        id="path113-1"
        cx="67.733337"
        cy="67.733337"
