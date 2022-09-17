@@ -35,14 +35,18 @@ export default class PitcherSampler {
             }
         }
     }
-    playSample(noteToPlay:number) {
+    playSample(noteToPlay:number, duration:number) {
         if(!this.sample) return;
+        const gainNode = this.audioContext.createGain();
 
         const source = this.audioContext.createBufferSource();
         source.buffer = this.sample;
         source.playbackRate.value = 2 ** ((noteToPlay - 55) / 12);
-        source.connect(this.audioContext.destination);
+        source.connect(gainNode);
+        gainNode.connect(this.audioContext.destination);
+        gainNode.gain.setTargetAtTime(0, this.audioContext.currentTime + duration - 0.1, 0.5);
         source.start(0);
+        //source.stop(this.audioContext.currentTime + duration);
       }
     //   playSample(sample, 60, 62);
 }

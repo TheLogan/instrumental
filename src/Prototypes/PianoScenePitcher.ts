@@ -48,7 +48,7 @@ export default class PianoScenePitcher extends Phaser.Scene {
         // this.pitcher.playPitch(notesOld[currentNote.note], this.ovtNumber, currentNote.length);
         let midi = notes.find(note => currentNote && note.note === currentNote.note)?.midi;
         if(!midi) return;
-        this.pitcher.playSample(midi);
+        this.pitcher.playSample(midi, currentNote.length);
       } else if (musicNotes.length <= 0) {
         clearInterval(musicInterval);
       }
