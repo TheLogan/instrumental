@@ -9,6 +9,8 @@ export const svgs: iImages = {
   "1/2": 'assets/Notes/Half',
   "1/4": 'assets/Notes/Quarter',
   "1/8": "assets/Notes/Eighth",
+  "GAUGE": 'assets/Art/gauge'
+
 }
 
 interface iImages {

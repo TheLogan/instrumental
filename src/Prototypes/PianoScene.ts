@@ -33,10 +33,6 @@ export default class PianoScene extends Phaser.Scene {
     let customWaveform = this.audioContex.createPeriodicWave(cosineTerms, sineTerms);
     oscillator.setPeriodicWave(customWaveform);
 
-    // let imag = new Float32Array([0, 0, 1, 0, 1]);   // sine
-    // let real = new Float32Array(imag.length);  // cos
-    // const wave = this.audioContex.createPeriodicWave(real, imag, { disableNormalization: true });
-    // oscillator.setPeriodicWave(wave);
 
     oscillator.start();
     oscillator.stop(this.audioContex.currentTime + duration);
