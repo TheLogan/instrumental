@@ -70,23 +70,28 @@ export default class PianoScenePitcher extends Phaser.Scene {
     console.log('notes', newMusicNotes);
 
     let musicTime = 0;
+    let lastUpdate = Date.now();
     let musicInterval = setInterval(() => {
+      var now = Date.now();
+      var deltaTime = now - lastUpdate;
+      lastUpdate = now;
+
       if (musicNotes.length <= 0) {
         clearInterval(musicInterval);
         return;
       }
-      musicTime += 50;
+      musicTime += deltaTime;
       if (musicNotes[0].note != "rest" && musicNotes[0].timestamp <= musicTime) {
         let currentNote = musicNotes.shift();
         if (!currentNote) return;
         let midi = notes.find(note => currentNote && note.note === currentNote.note)?.midi;
         if (!midi) return;
-        console.log('midi', midi, 'currentNote',  currentNote);
-        
+        console.log('midi', midi, 'currentNote', currentNote);
+
         this.pitcher.playSample(midi, currentNote.duration);
       } else if (musicNotes[0].note === 'rest') {
         let currentNote = musicNotes.shift();
       }
-    }, 50);
+    }, 10);
   }
 }
