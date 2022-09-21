@@ -10,7 +10,7 @@ import { getNoteByFreq } from '../../Utilities/MusicMath';
 export default class LearnSheetMusic extends Phaser.Scene {
   constructor() { super('LearnSheetMusic') }
 
-  sheetNotes: { go: GameObjects.Image, note: number, decorators?: any[] }[] = [];
+  sheetNotes: { go: GameObjects.Image, note: string, decorators?: any[] }[] = [];
   tunerEngine: TunerEngine = new TunerEngine();
 
   create() {
@@ -50,8 +50,13 @@ export default class LearnSheetMusic extends Phaser.Scene {
     const freq = this.tunerEngine.getFreq();
     const closest = getNoteByFreq(freq);
 
-    // if (closest.note)
 
+    if (closest.note === this.sheetNotes[0].note) {
+      // figure out how close the note is or isn't 
+
+    } else {
+
+    }
   }
 
   // compareTone = (sheetNotes: { go: GameObjects.Image, note: number, decorators?: any[] }[]) => {
