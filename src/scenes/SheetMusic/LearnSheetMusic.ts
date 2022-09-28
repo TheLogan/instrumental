@@ -5,19 +5,23 @@ import OpenString from '../../Music/Violin/OpenString.json';
 import { notes, notesShort } from '../../Utilities/Constants';
 import { renderMeta } from './Helpers';
 import TunerEngine from '../../Utilities/TunerEngine';
-import { getNoteByFreq } from '../../Utilities/MusicMath';
+import { getClosestPercentage, getNoteByFreq } from '../../Utilities/MusicMath';
 
 export default class LearnSheetMusic extends Phaser.Scene {
   constructor() { super('LearnSheetMusic') }
 
   sheetNotes: { go: GameObjects.Image, note: string, decorators?: any[] }[] = [];
   tunerEngine: TunerEngine = new TunerEngine();
+  wrongNote?: Phaser.GameObjects.Image;
 
   create() {
     const topBarY = this.renderer.width / 10;
     const bottomBarIndex = 16;
     const bottomY = topBarY + 8 * 8;
     renderMeta(this, topBarY);
+    this.wrongNote = this.add.image(0, 0, svgs['1/4']);
+    this.wrongNote.alpha = 0;
+    this.wrongNote.setTintFill(0xff0000);
 
     const baseIndex = notesShort.findIndex(x => x.note === "F5");
     for (const [index, note] of OpenString.events.entries()) {
@@ -49,13 +53,19 @@ export default class LearnSheetMusic extends Phaser.Scene {
     if (this.sheetNotes.length <= 0 || !this.sheetNotes[0]) return;
     const freq = this.tunerEngine.getFreq();
     const closest = getNoteByFreq(freq);
+    let closenessPercent = getClosestPercentage(freq);
+    if (closenessPercent == null) return;
 
+    // somehow figure out if the current note is a new note.
 
-    if (closest.note === this.sheetNotes[0].note) {
-      // figure out how close the note is or isn't 
-
+    if (closest.note === this.sheetNotes[0].note && closenessPercent < 15) {
+      // success!!
     } else {
-
+      if (closest.freq > freq) { // Should we render a red note instead?
+        // arrow up
+      } else {
+        // arrow down
+      }
     }
   }
 

@@ -2,7 +2,7 @@ import Phaser from 'phaser';
 import TunerEngine from '../Utilities/TunerEngine';
 import { notes } from '../Utilities/Constants';
 import { svgs } from '../Utilities/assets';
-import { getNoteByFreq } from '../Utilities/MusicMath';
+import { getClosestPercentage, getNoteByFreq } from '../Utilities/MusicMath';
 
 export default class TunerScene extends Phaser.Scene {
   constructor() {
@@ -60,22 +60,9 @@ export default class TunerScene extends Phaser.Scene {
     }
     const closest = getNoteByFreq(freq);
 
-    const closestIndex = notes.findIndex(x => x.freq === closest.freq);
+    const percent = getClosestPercentage(freq);
 
-    let secondClosest;
-    if (closest.freq > freq) {
-      secondClosest = notes[closestIndex - 1];
-      if (secondClosest?.freq === closest.freq) secondClosest = notes[closestIndex - 2];
-    } else {
-      secondClosest = notes[closestIndex + 1];
-      if (secondClosest?.freq === closest.freq) secondClosest = notes[closestIndex + 2];
-    }
-    if (!secondClosest || !this.gauge) return;
-
-    let totalDiff = Math.abs(secondClosest.freq - closest.freq);
-
-    let diff = closest.freq - freq;
-    let percent = diff / totalDiff * -100;
+    if (!this.gauge || !percent) return;
 
     this.gauge.arrow.angle = percent;
     this.gauge.noteText.text.text = closest.note;
