@@ -49,6 +49,7 @@ export default class LearnSheetMusic extends Phaser.Scene {
       }
     }
   }
+
   update() {
     if (this.sheetNotes.length <= 0 || !this.sheetNotes[0]) return;
     const freq = this.tunerEngine.getFreq();
@@ -60,6 +61,7 @@ export default class LearnSheetMusic extends Phaser.Scene {
 
     if (closest.note === this.sheetNotes[0].note && closenessPercent < 15) {
       // success!!
+      this.removeNote();
     } else {
       if (closest.freq > freq) { // Should we render a red note instead?
         // arrow up
@@ -69,34 +71,34 @@ export default class LearnSheetMusic extends Phaser.Scene {
     }
   }
 
-  // compareTone = (sheetNotes: { go: GameObjects.Image, note: number, decorators?: any[] }[]) => {
-  //   const currentNote = sheetNotes.shift();
-  //   if (!currentNote) return;
+  removeNote() {
+    const currentNote = this.sheetNotes.shift();
+    if (!currentNote) return;
 
-  //   this.tweens.add({
-  //     targets: currentNote.go,
-  //     y: this.game.renderer.height,
-  //     duration: 1500,
-  //     ease: 'Sine.in',
-  //     yoyo: false,
-  //     repeat: 0,
-  //     alpha: { value: 0, duration: 300, ease: 'Power1', delay: 500 },
-  //     onComplete: () => currentNote.go.destroy()
-  //   });
+    this.tweens.add({
+      targets: currentNote.go,
+      y: this.game.renderer.height,
+      duration: 1500,
+      ease: 'Sine.in',
+      yoyo: false,
+      repeat: 0,
+      alpha: { value: 0, duration: 300, ease: 'Power1', delay: 500 },
+      onComplete: () => currentNote.go.destroy()
+    });
 
-  //   if (currentNote.decorators && currentNote.decorators.length > 0) {
-  //     for (const decorator of currentNote.decorators) {
-  //       this.tweens.add({
-  //         targets: decorator,
-  //         // y: this.game.renderer.height,
-  //         duration: 600,
-  //         ease: 'Sine.in',
-  //         yoyo: false,
-  //         repeat: 0,
-  //         alpha: { value: 0, duration: 500, ease: 'Power1', delay: 100 },
-  //         onComplete: () => decorator.destroy()
-  //       });
-  //     }
-  //   }
-  // }
+    if (currentNote.decorators && currentNote.decorators.length > 0) {
+      for (const decorator of currentNote.decorators) {
+        this.tweens.add({
+          targets: decorator,
+          // y: this.game.renderer.height,
+          duration: 600,
+          ease: 'Sine.in',
+          yoyo: false,
+          repeat: 0,
+          alpha: { value: 0, duration: 500, ease: 'Power1', delay: 100 },
+          onComplete: () => decorator.destroy()
+        });
+      }
+    }
+  }
 }
