@@ -9,6 +9,7 @@ export const renderMeta = (that: LearnSheetMusic, topBarY: number) => {
 
   // draws the horizontal bars
   const fBar = that.add.rectangle(that.renderer.width / 2, topBarY, that.renderer.width - 100, 2, 0x000000);
+  fBar.fillColor = 0xff0000;
   const dBar = that.add.rectangle(that.renderer.width / 2, topBarY + 16, that.renderer.width - 100, 2, 0x000000);
   const bBar = that.add.rectangle(that.renderer.width / 2, topBarY + 32, that.renderer.width - 100, 2, 0x000000);
   const gBar = that.add.rectangle(that.renderer.width / 2, topBarY + 48, that.renderer.width - 100, 2, 0x000000);
@@ -18,4 +19,8 @@ export const renderMeta = (that: LearnSheetMusic, topBarY: number) => {
 
   that.add.rectangle(fBar.getRightCenter().x - 20, fBar.y + 32, 3, 65, 0x000000);
   that.add.rectangle(fBar.getRightCenter().x, fBar.y + 32, 10, 65, 0x000000);
+}
+
+export const addNote = (centerNote: string) => {
+
 }
