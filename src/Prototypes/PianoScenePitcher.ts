@@ -10,7 +10,7 @@ import PitcherSampler from '../Utilities/PitcherSampler';
 
 export default class PianoScenePitcher extends Phaser.Scene {
   audioContex = new AudioContext();
-  tempo = 100;
+  tempoQuarterNote = 60/music['metronome mark']*4;
 
   pitcher = new PitcherSampler();
 
@@ -24,7 +24,7 @@ export default class PianoScenePitcher extends Phaser.Scene {
 
   playMelody = (music: any) => {
     const musicNotes: { timestamp: number, note: string, duration: number }[] = [];
-    this.tempo = music['metronome mark'];
+    //this.tempo = music['metronome mark'];
 
     let skipCount = 0;
     for (const [index, event] of music.events.entries()) {
@@ -33,14 +33,14 @@ export default class PianoScenePitcher extends Phaser.Scene {
         continue;
       }
       if (event.type === 'note') {
-        let duration = noteDuration[event.duration];
+        let duration = noteDuration[event.duration]*this.tempoQuarterNote;
         if (event.relations?.dot) {
           duration = dotLength(duration);
         }
         if (event.relations?.tie) {
           skipCount = event.relations.tie;
           const tiedNotes = music.events.slice(index + 1, index + event.relations.tie + 1);
-          const tiedDuration = tiedNotes.map((x: any) => noteDuration[x.duration]);
+          const tiedDuration = tiedNotes.map((x: any) => noteDuration[x.duration]*this.tempoQuarterNote);
 
           duration = tieLength(duration, tiedDuration);
         }
@@ -62,7 +62,7 @@ export default class PianoScenePitcher extends Phaser.Scene {
         const lastDuration = musicNotes[musicNotes.length - 1]?.duration || 0;
         const timestamp = lastTimestamp + lastDuration * 1000;
 
-        musicNotes.push({ timestamp, note: "rest", duration: noteDuration[event.duration] });
+        musicNotes.push({ timestamp, note: "rest", duration: noteDuration[event.duration]*this.tempoQuarterNote });
 
       }
     }
