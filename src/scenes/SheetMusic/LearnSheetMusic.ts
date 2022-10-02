@@ -6,25 +6,34 @@ import { notes, notesShort } from '../../Utilities/Constants';
 import { addNotes, renderMeta } from './Helpers';
 import TunerEngine from '../../Utilities/TunerEngine';
 import { getClosestPercentage, getNoteByFreq } from '../../Utilities/MusicMath';
+import SheetMusic from './SheetMusic';
+import { Music } from '../../Music/Music';
 
 export default class LearnSheetMusic extends Phaser.Scene {
-  constructor() { super('LearnSheetMusic') }
+  constructor() { super('LearnSheetMusic')
+  this.music = <Music>OpenString;;
+}
 
+  music: Music;
   sheetNotes: { go: GameObjects.Image, note: string, decorators?: any[] }[] = [];
   tunerEngine: TunerEngine = new TunerEngine();
   wrongNote?: Phaser.GameObjects.Image;
 
   create() {
     const topBarY = this.renderer.width / 10;
-    const bottomBarIndex = 16;
-    const bottomY = topBarY + 8 * 8;
+    // const bottomBarIndex = 16;
+    // const bottomY = topBarY + 8 * 8;
     // renderMeta(this, topBarY);
+    
+    // const baseIndex = notesShort.findIndex(x => x.note === "F5");
+    // addNotes(OpenString.events);
+    
+    const sheet = new SheetMusic(this, this.music, 150, topBarY);
+    
     this.wrongNote = this.add.image(0, 0, svgs['1/4']);
     this.wrongNote.alpha = 0;
     this.wrongNote.setTintFill(0xff0000);
 
-    const baseIndex = notesShort.findIndex(x => x.note === "F5");
-    addNotes(OpenString.events);
     // for (const [index, note] of OpenString.events.entries()) {
       // const x = 150 + 100 * index;
       // let y = topBarY;
