@@ -51,10 +51,15 @@ export default class PitcherSampler {
     }
 
 
-    playSample(noteToPlay: number, duration: number) {
+    playSample(noteToPlay: number, duration: number, timeStamp: number) {
         if (!this.sample) return;
         const gainNode = this.audioContext.createGain();
         const distNode = this.audioContext.createWaveShaper();
+        const decayArray = [];
+        for (let index = 1; index < 9; index++) {
+            decayArray.push(1/index)
+        }
+        console.log(decayArray);
         distNode.curve = this.makeDistortionCurve(400);
         const source = this.audioContext.createBufferSource();
         source.buffer = this.sample;
@@ -62,9 +67,9 @@ export default class PitcherSampler {
         source.connect(distNode);
         distNode.connect(gainNode);
         gainNode.connect(this.audioContext.destination);
-        gainNode.gain.setTargetAtTime(0, this.audioContext.currentTime + duration - 0.2, 0.3);
-        source.start(0);
-        //source.stop(this.audioContext.currentTime + duration);
+        gainNode.gain.setValueCurveAtTime(decayArray, this.audioContext.currentTime + timeStamp, 3); //duration
+        source.start(this.audioContext.currentTime + timeStamp);
+        source.stop(this.audioContext.currentTime + timeStamp + duration);
     }
     //   playSample(sample, 60, 62);
 }
