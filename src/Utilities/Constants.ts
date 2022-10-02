@@ -389,6 +389,6 @@ interface iStringKey {
   [key: string]: number;
 }
 
-interface iNote {
+export interface iNote {
   note: string, freq: number, midi?: number;
 }
