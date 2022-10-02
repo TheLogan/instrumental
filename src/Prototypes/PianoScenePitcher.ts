@@ -2,7 +2,7 @@ import Phaser from 'phaser'
 // import OdeToJoy from "../Music/OdeToJoy.json";
 import music from "../Music/SmokeOnTheWater.json";
 import { noteLength as noteDuration, notes } from '../Utilities/Constants';
-import { dotLength, tieLength } from '../Utilities/MusicMath';
+import { dotDuration, tieDuration } from '../Utilities/MusicMath';
 // import Pitcher from '../Utilities/Pitcher';
 import PitcherSampler from '../Utilities/PitcherSampler';
 
@@ -35,14 +35,14 @@ export default class PianoScenePitcher extends Phaser.Scene {
       if (event.type === 'note') {
         let duration = noteDuration[event.duration]*this.tempoQuarterNote;
         if (event.relations?.dot) {
-          duration = dotLength(duration);
+          duration = dotDuration(duration, event.relations.dot);
         }
         if (event.relations?.tie) {
           skipCount = event.relations.tie;
           const tiedNotes = music.events.slice(index + 1, index + event.relations.tie + 1);
           const tiedDuration = tiedNotes.map((x: any) => noteDuration[x.duration]*this.tempoQuarterNote);
 
-          duration = tieLength(duration, tiedDuration);
+          duration = tieDuration(duration, tiedDuration);
         }
         const lastTimestamp = musicNotes[musicNotes.length - 1]?.timestamp || 0;
         const lastLength = musicNotes[musicNotes.length - 1]?.duration || 0;

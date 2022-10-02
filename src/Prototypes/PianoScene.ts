@@ -1,7 +1,7 @@
 import Phaser from 'phaser'
 import OdeToJoy from "../Music/OdeToJoy.json";
 import { notesOld, noteLength } from '../Utilities/Constants';
-import { dotLength } from '../Utilities/MusicMath';
+import { dotDuration } from '../Utilities/MusicMath';
 
 export default class PianoScene extends Phaser.Scene {
   audioContex = new AudioContext();
@@ -46,7 +46,7 @@ export default class PianoScene extends Phaser.Scene {
       if (event.type === 'note') {
         let length = noteLength[event.duration];
         if (event.relations?.dot) {
-          length = dotLength(length);
+          length = dotDuration(length);
         }
         const lastTimestamp = notes[notes.length - 1]?.timestamp || 0;
         const lastLength = notes[notes.length - 1]?.length || 0;

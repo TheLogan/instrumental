@@ -1,15 +1,19 @@
 import { notes } from "./Constants";
 
-export const dotLength = (nodeLength: number) => {
-  return nodeLength + (nodeLength / 2)
+export const dotDuration = (nodeDuration: number, dottings: number) => {
+  let duration = 0;
+  for (let index = 0; index <= dottings; index++) {
+    duration += nodeDuration*1/2^index;
+  }
+  return duration;
 }
 
-export const tupletLength = (nodeLength: number, count: number) => {
-  return nodeLength * (count - 1) / count; // triplet = 2/3
+export const tupleDuration = (nodeDuration: number, count: number) => {
+  return nodeDuration * (count - 1) / count; // triplet = 2/3
 }
 
-export const tieLength = (nodeLength: number, nodeLengthNext: number[]) => {
-  return nodeLengthNext.reduce((sum, next) => sum + next, nodeLength);
+export const tieDuration = (nodeDuration: number, nodeDurationNext: number[]) => {
+  return nodeDurationNext.reduce((sum, next) => sum + next, nodeDuration);
 }
 
 export const getNoteByFreq = (freq: number) => {
