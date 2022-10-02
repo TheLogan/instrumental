@@ -1,7 +1,7 @@
 import Phaser from 'phaser'
 // import OdeToJoy from "../Music/OdeToJoy.json";
 import music from "../Music/SmokeOnTheWater.json";
-import { notesOld, noteLength as noteDuration, notes } from '../Utilities/Constants';
+import { noteLength as noteDuration, notes } from '../Utilities/Constants';
 import { dotLength, tieLength } from '../Utilities/MusicMath';
 // import Pitcher from '../Utilities/Pitcher';
 import PitcherSampler from '../Utilities/PitcherSampler';
@@ -9,7 +9,7 @@ import PitcherSampler from '../Utilities/PitcherSampler';
 
 
 export default class PianoScenePitcher extends Phaser.Scene {
-  audioContex = new AudioContext();
+  // audioContex = new AudioContext();
   tempoQuarterNote = 60/music['metronome mark']*4;
 
   pitcher = new PitcherSampler();
@@ -47,7 +47,7 @@ export default class PianoScenePitcher extends Phaser.Scene {
         const lastTimestamp = musicNotes[musicNotes.length - 1]?.timestamp || 0;
         const lastLength = musicNotes[musicNotes.length - 1]?.duration || 0;
 
-        const timestamp = lastTimestamp + lastLength * 1000;
+        const timestamp = lastTimestamp + lastLength;
 
         // if(musicNotes[musicNotes.length - 1].note == "rest") {
         //   console.log('lastTimestamp', lastTimestamp);
@@ -60,7 +60,7 @@ export default class PianoScenePitcher extends Phaser.Scene {
       if (event.type === 'rest') {
         const lastTimestamp = musicNotes[musicNotes.length - 1]?.timestamp || 0;
         const lastDuration = musicNotes[musicNotes.length - 1]?.duration || 0;
-        const timestamp = lastTimestamp + lastDuration * 1000;
+        const timestamp = lastTimestamp + lastDuration;
 
         musicNotes.push({ timestamp, note: "rest", duration: noteDuration[event.duration]*this.tempoQuarterNote });
 
@@ -69,29 +69,40 @@ export default class PianoScenePitcher extends Phaser.Scene {
     let newMusicNotes = [...musicNotes];
     console.log('notes', newMusicNotes);
 
-    let musicTime = 0;
-    let lastUpdate = Date.now();
-    let musicInterval = setInterval(() => {
-      var now = Date.now();
-      var deltaTime = now - lastUpdate;
-      lastUpdate = now;
+    for (const currentNote of musicNotes) {
+      console.log(currentNote)
+      let midi = notes.find(note => currentNote && note.note === currentNote.note)?.midi;
+      if (!midi) continue;
+      this.pitcher.playSample(midi, currentNote.duration, currentNote.timestamp);
+    }
 
-      if (musicNotes.length <= 0) {
-        clearInterval(musicInterval);
-        return;
-      }
-      musicTime += deltaTime;
-      if (musicNotes[0].note != "rest" && musicNotes[0].timestamp <= musicTime) {
-        let currentNote = musicNotes.shift();
-        if (!currentNote) return;
-        let midi = notes.find(note => currentNote && note.note === currentNote.note)?.midi;
-        if (!midi) return;
-        console.log('midi', midi, 'currentNote', currentNote);
 
-        this.pitcher.playSample(midi, currentNote.duration);
-      } else if (musicNotes[0].note === 'rest') {
-        let currentNote = musicNotes.shift();
-      }
-    }, 10);
+  //  let musicTime = 0;
+  //  let lastUpdate = Date.now();
+  //  let startTime = Date.now();
+    // let musicInterval = setInterval(() => {
+    //   var now = Date.now();
+    //   var deltaTime = now - lastUpdate;
+    //   lastUpdate = now;
+
+    //   if (musicNotes.length <= 0) {
+    //     clearInterval(musicInterval);
+    //     return;
+    //   }
+    //   musicTime += deltaTime;
+    //   if (musicNotes[0].note != "rest" && musicNotes[0].timestamp <= musicTime) {
+    //     let currentNote = musicNotes.shift();
+    //     if (!currentNote) return;
+    //     let midi = notes.find(note => currentNote && note.note === currentNote.note)?.midi;
+    //     if (!midi) return;
+    //     console.log('midi', midi, 'currentNote', currentNote);
+    //     console.log('currentTime', now - startTime, now - startTime - currentNote.timestamp);
+        
+
+    //     this.pitcher.playSample(midi, currentNote.duration);
+    //   } else if (musicNotes[0].note === 'rest') {
+    //     let currentNote = musicNotes.shift();
+    //   }
+    // }, 0.1);
   }
 }
