@@ -11,7 +11,7 @@ import { Music } from '../../Music/Music';
 
 export default class LearnSheetMusic extends Phaser.Scene {
   constructor() { super('LearnSheetMusic')
-  this.music = <Music>OpenString;;
+  this.music = <Music>OpenString;
 }
 
   music: Music;
