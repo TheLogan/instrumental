@@ -2,6 +2,7 @@
   "name": "music name",
   "time signature": "4/4",
   "BPM": 120,
+  "BPM type": "1/4",
   "key signatures": [{ "b": "B" }, { "#": "G" }],
   "events": [
     {
