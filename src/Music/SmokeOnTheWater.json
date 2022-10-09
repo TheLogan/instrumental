@@ -1,7 +1,8 @@
 {
   "name": "Smoke on the Water",
   "time signature": "4/4",
-  "metronome mark": 115,
+  "BPM": 115,
+  "BPM type": "1/4",
   "events": [
     { "type": "note", "note": "D3", "duration": "1/4" },
     { "type": "note", "note": "F3", "duration": "1/4" },

@@ -1,7 +1,8 @@
 {
   "name": "Ode to Joy",
   "time signature": "4/4",
-  "metronome mark": 120,
+  "BPM": 120,
+  "BPM type": "1/4",
   "events": [
     {
       "type": "note",

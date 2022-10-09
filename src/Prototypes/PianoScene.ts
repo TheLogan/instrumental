@@ -40,7 +40,7 @@ export default class PianoScene extends Phaser.Scene {
 
   playMelody = () => {
     const notes: { timestamp: number, note: string, length: number }[] = [];
-    this.tempo = OdeToJoy['metronome mark'];
+    this.tempo = OdeToJoy['BPM'];
 
     for (const event of OdeToJoy.events) {
       if (event.type === 'note') {

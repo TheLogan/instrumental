@@ -1,7 +1,7 @@
 {
   "name": "music name",
   "time signature": "4/4",
-  "metronome mark": 120,
+  "BPM": 120,
   "key signatures": [{ "b": "B" }, { "#": "G" }],
   "events": [
     {
