@@ -2,8 +2,6 @@ import Phaser, { GameObjects, Tweens } from 'phaser'
 import { svgs } from '../../Utilities/assets';
 import OpenString from '../../Music/Violin/OpenString.json';
 // import OdeToJoy from "../../Music/OdeToJoy.json";
-import { notes, notesShort } from '../../Utilities/Constants';
-import { addNotes, renderMeta } from './Helpers';
 import TunerEngine from '../../Utilities/TunerEngine';
 import { getClosestPercentage, getNoteByFreq } from '../../Utilities/MusicMath';
 import SheetMusic from './SheetMusic';

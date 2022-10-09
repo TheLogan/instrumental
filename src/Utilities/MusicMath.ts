@@ -42,9 +42,3 @@ export const getClosestPercentage = (freq: number) => {
   let diff = closest.freq - freq;
   return diff / totalDiff * -100;
 }
-
-export const calculateTimeSig = (timeSig: string) => {
-  let timeSigSplit = timeSig.split("/");
-  if (timeSigSplit.length != 2) return "incorrect time signature format";
-  return Number(timeSigSplit[0]) / Number(timeSigSplit[1]);
-} 
