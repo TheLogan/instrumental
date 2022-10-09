@@ -1,8 +1,9 @@
 import Phaser from 'phaser'
+import { Music } from '../Music/Music';
 // import OdeToJoy from "../Music/OdeToJoy.json";
-import music from "../Music/SmokeOnTheWater.json";
+import smokeOnWater from "../Music/SmokeOnTheWater.json";
 import { noteLength as noteDuration, notes } from '../Utilities/Constants';
-import { dotDuration, tieDuration } from '../Utilities/MusicMath';
+import { dotDuration, tieDuration, calculateTimeSig } from '../Utilities/MusicMath';
 // import Pitcher from '../Utilities/Pitcher';
 import PitcherSampler from '../Utilities/PitcherSampler';
 
@@ -10,21 +11,24 @@ import PitcherSampler from '../Utilities/PitcherSampler';
 
 export default class PianoScenePitcher extends Phaser.Scene {
   // audioContex = new AudioContext();
-  tempoQuarterNote = 60/music['metronome mark']*4;
 
   pitcher = new PitcherSampler();
+  music = <Music>smokeOnWater;
 
   constructor() {
     super('PianoScenePitcher');
   }
 
   create = () => {
-    this.playMelody(music);
+    this.playMelody(this.music);
   }
-
-  playMelody = (music: any) => {
+  
+  playMelody = (music: Music) => {
+    let timeSigSplit = music['BPM type'].split("/");
+    if (timeSigSplit.length != 2) return "incorrect time signature format";
+    let tempo = 60/music['BPM']*Number(timeSigSplit[1]);
     const musicNotes: { timestamp: number, note: string, duration: number }[] = [];
-    //this.tempo = music['metronome mark'];
+    //this.tempo = music['BPM'];
 
     let skipCount = 0;
     for (const [index, event] of music.events.entries()) {
@@ -33,14 +37,14 @@ export default class PianoScenePitcher extends Phaser.Scene {
         continue;
       }
       if (event.type === 'note') {
-        let duration = noteDuration[event.duration]*this.tempoQuarterNote;
+        let duration = noteDuration[event.duration]*tempo;
         if (event.relations?.dot) {
           duration = dotDuration(duration, event.relations.dot);
         }
         if (event.relations?.tie) {
           skipCount = event.relations.tie;
           const tiedNotes = music.events.slice(index + 1, index + event.relations.tie + 1);
-          const tiedDuration = tiedNotes.map((x: any) => noteDuration[x.duration]*this.tempoQuarterNote);
+          const tiedDuration = tiedNotes.map((x: any) => noteDuration[x.duration]*tempo);
 
           duration = tieDuration(duration, tiedDuration);
         }
@@ -62,7 +66,7 @@ export default class PianoScenePitcher extends Phaser.Scene {
         const lastDuration = musicNotes[musicNotes.length - 1]?.duration || 0;
         const timestamp = lastTimestamp + lastDuration;
 
-        musicNotes.push({ timestamp, note: "rest", duration: noteDuration[event.duration]*this.tempoQuarterNote });
+        musicNotes.push({ timestamp, note: "rest", duration: noteDuration[event.duration]*tempo });
 
       }
     }

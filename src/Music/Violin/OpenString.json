@@ -1,7 +1,7 @@
 {
   "name": "Open string",
   "time signature": "4/4",
-  "metronome mark": 120,
+  "BPM": 120,
   "events": [
     { "type": "note", "note": "G3", "duration": "1/4" },
     { "type": "note", "note": "G3", "duration": "1/4" },

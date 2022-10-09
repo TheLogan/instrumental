@@ -3,8 +3,9 @@ import { iNote } from '../Utilities/Constants';
 export type Music = {
   "name": string,
   "time signature": string,
-  "metronome mark": number,
   "events": MusicEvent;
+  "BPM": number,
+  "BPM type": string,
 }
 
 export type MusicEvent = (noteEvent | restEvent | chordEvent | timeSignatureEvent)[]
