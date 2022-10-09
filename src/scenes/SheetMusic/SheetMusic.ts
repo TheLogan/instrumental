@@ -3,9 +3,9 @@ import { Music, MusicEvent } from "../../Music/Music";
 export default class SheetMusic {
   bars: MusicEvent[][] = [];
   staffsGo: any[][][] = [];
-  sceneInst: any;
+  sceneInst: Phaser.Scene;
 
-  constructor(sceneInst: any, music: Music, x: number, y: number) {
+  constructor(sceneInst: Phaser.Scene, music: Music, x: number, y: number) {
     this.sceneInst = sceneInst;
     // split into bars
     let timeSigSplit = music["time signature"].split("/");
@@ -13,6 +13,7 @@ export default class SheetMusic {
     let barLength = Number(timeSigSplit[0]) / Number(timeSigSplit[1]);
     if (Number.isNaN(barLength)) return;
     this.sortIntoBars(music.events, barLength);
+    this.renderStaffs();
 
   }
 
@@ -30,8 +31,18 @@ export default class SheetMusic {
     }
   }
 
+  renderStaffs = () => {
+    // this.sceneInst.add.
+  }
+
+  getCurrentNote = (shift: boolean = false) => {
+    if(shift){
+      return this.staffsGo[0][0].shift();
+    }
+    return this.staffsGo[0][0][0];
+  }
   getNotePos = () => {
-    return this.staffsGo[0][0][0].pos; //FIXME: this is bullshit
+    return this.getCurrentNote().pos; //FIXME: this is bullshit.. is it though..? Why..? xD
   }
 
 }
