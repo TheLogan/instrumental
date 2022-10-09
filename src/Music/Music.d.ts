@@ -1,5 +1,3 @@
-import { iNote } from '../Utilities/Constants';
-
 export type Music = {
   "name": string,
   "time signature": string,
@@ -12,7 +10,7 @@ export type MusicEvent = (noteEvent | restEvent | chordEvent | timeSignatureEven
 
 export type noteEvent = {
   type: "note",
-  note: iNote,
+  note: string,
   duration: duration,
   relations?: EventRelations,
 };
@@ -24,7 +22,7 @@ export type restEvent = {
 
 export type chordEvent = {
   type: "chord",
-  note: iNote[],
+  note: string[],
   duration: duration,
   relations?: EventRelations
 };
